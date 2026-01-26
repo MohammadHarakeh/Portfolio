@@ -54,7 +54,7 @@ export function Contact() {
             </h2>
             <div className="w-24 h-1 bg-primary-600 mx-auto"></div>
             <p className="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">
-              Have a project in mind? Let's work together to bring your ideas to life.
+              Have a project in mind? Let&apos;s work together to bring your ideas to life.
             </p>
           </div>
 
@@ -68,10 +68,10 @@ export function Contact() {
             >
               <div>
                 <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
-                  Let's Connect
+                  Let&apos;s Connect
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-8">
-                  I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+                  I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
                 </p>
               </div>
 

@@ -52,7 +52,7 @@ export function About() {
               </p>
 
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                I'm passionate about creating innovative solutions that solve real-world problems.
+                I&apos;m passionate about creating innovative solutions that solve real-world problems.
                 With experience in both frontend and backend development, I bring a comprehensive
                 approach to building web applications that are both functional and user-friendly.
               </p>

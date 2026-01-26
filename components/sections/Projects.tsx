@@ -31,7 +31,7 @@ export function Projects() {
             </h2>
             <div className="w-24 h-1 bg-primary-600 mx-auto"></div>
             <p className="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">
-              A selection of projects I've built, showcasing my skills and passion for development
+              A selection of projects I&apos;ve built, showcasing my skills and passion for development
             </p>
           </div>
 

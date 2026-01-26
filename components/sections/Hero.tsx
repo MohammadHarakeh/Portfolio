@@ -67,7 +67,7 @@ export function Hero() {
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
               <span className="block text-gray-900 dark:text-white">
-                Hi, I'm{' '}
+                Hi, I&apos;m{' '}
                 <span className="bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
                   {personalInfo.name.split(' ')[0]}
                 </span>
