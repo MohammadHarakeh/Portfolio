@@ -15,7 +15,7 @@ export function Experience() {
     <section
       id="experience"
       ref={ref}
-      className="py-20 bg-gray-50 dark:bg-gray-800"
+      className="py-20 bg-gray-50 dark:bg-gray-900 relative"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -47,7 +47,7 @@ export function Experience() {
                     className="relative pl-8 border-l-2 border-primary-300 dark:border-primary-700"
                   >
                     <div className="absolute -left-[9px] top-0 w-4 h-4 bg-primary-600 rounded-full"></div>
-                    <div className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-md">
+                    <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
                         <h4 className="text-xl font-bold text-gray-900 dark:text-white">
                           {exp.title}
@@ -98,7 +98,7 @@ export function Experience() {
                 className="relative pl-8 border-l-2 border-primary-300 dark:border-primary-700"
               >
                 <div className="absolute -left-[9px] top-0 w-4 h-4 bg-primary-600 rounded-full"></div>
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-md">
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
                     <h4 className="text-xl font-bold text-gray-900 dark:text-white">
                       {education.degree}
@@ -130,7 +130,7 @@ export function Experience() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ delay: 0.4 + index * 0.1, duration: 0.6 }}
-                    className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-md"
+                    className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors"
                   >
                     <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                       {cert.name}

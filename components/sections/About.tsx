@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { User, MapPin, Mail, Phone } from 'lucide-react'
+import { User } from 'lucide-react'
 import { personalInfo } from '@/lib/data'
 
 export function About() {
@@ -14,7 +14,7 @@ export function About() {
     <section
       id="about"
       ref={ref}
-      className="py-20 bg-white dark:bg-gray-900"
+      className="py-20 bg-white dark:bg-gray-900 relative"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -56,31 +56,6 @@ export function About() {
                 With experience in both frontend and backend development, I bring a comprehensive
                 approach to building web applications that are both functional and user-friendly.
               </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                <div className="flex items-center space-x-3">
-                  <MapPin size={20} className="text-primary-600 dark:text-primary-400" />
-                  <span className="text-gray-700 dark:text-gray-300">{personalInfo.location}</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Mail size={20} className="text-primary-600 dark:text-primary-400" />
-                  <a
-                    href={`mailto:${personalInfo.email}`}
-                    className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                  >
-                    {personalInfo.email}
-                  </a>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Phone size={20} className="text-primary-600 dark:text-primary-400" />
-                  <a
-                    href={`tel:${personalInfo.phone}`}
-                    className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                  >
-                    {personalInfo.phone}
-                  </a>
-                </div>
-              </div>
             </motion.div>
           </div>
         </motion.div>

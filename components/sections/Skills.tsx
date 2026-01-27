@@ -61,7 +61,7 @@ export function Skills() {
     <section
       id="skills"
       ref={sectionRef}
-      className="py-20 bg-gray-50 dark:bg-gray-800"
+      className="py-20 bg-gray-50 dark:bg-gray-900 relative"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headerRef}>
@@ -97,18 +97,18 @@ export function Skills() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={isCategoriesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
                 transition={{ delay: categoryIndex * 0.15, duration: 0.6, ease: 'easeOut' }}
-                className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden"
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors overflow-hidden"
               >
                 <button
                   onClick={() => toggleCategory(category)}
-                  className="w-full flex items-center justify-between p-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 text-left"
+                  className="w-full flex items-center justify-between p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200 text-left"
                 >
                   <div className="flex items-center">
                     <Icon className={`${config.color} mr-3`} size={24} />
                     <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
                       {config.name}
                     </h3>
-                    <span className="ml-3 px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full">
+                    <span className="ml-3 px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full">
                       {categorySkills.length}
                     </span>
                   </div>
@@ -141,7 +141,7 @@ export function Skills() {
                                 duration: 0.2,
                               }}
                               whileHover={{ scale: 1.05 }}
-                              className="px-5 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-700 dark:hover:text-primary-400 transition-all duration-200"
+                              className="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 rounded-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-primary-100 dark:hover:bg-primary-500/20 hover:text-primary-700 dark:hover:text-primary-400 transition-all duration-200"
                             >
                               {skill.name}
                             </motion.div>

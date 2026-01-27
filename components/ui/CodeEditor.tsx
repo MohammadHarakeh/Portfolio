@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Copy, Check, FileCode, Terminal } from 'lucide-react'
 import { SnakeGame } from '@/components/games/SnakeGame'
 import { MinesweeperGame } from '@/components/games/MinesweeperGame'
+import { personalInfo } from '@/lib/data'
 
 interface CodeEditorProps {
   code?: string
@@ -162,6 +163,33 @@ export function CodeEditor({ code }: CodeEditorProps) {
             </div>
           ) : (
             <div key="terminal" className="p-4 min-h-full">
+              {/* Intro Section - Always show at top */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="mb-6 pb-6 border-b border-gray-700"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-green-400">$</span>
+                    <span className="text-gray-400">cat intro.txt</span>
+                  </div>
+                  <div className="pl-6 space-y-2">
+                    <div className="text-2xl font-bold text-gray-200">
+                      Hi, I&apos;m{' '}
+                      <span className="text-cyan-400">{personalInfo.name}</span>
+                    </div>
+                    <div className="text-lg text-yellow-400 font-semibold">
+                      {personalInfo.title}
+                    </div>
+                    <div className="text-gray-400 mt-3">
+                      {personalInfo.tagline}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              
               <div className="font-mono text-sm text-gray-300 space-y-1">
                 {output.map((line, index) => (
                   <div key={index} className="whitespace-pre-wrap">

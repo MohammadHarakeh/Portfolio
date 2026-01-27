@@ -14,7 +14,7 @@ export function BehindTheScenes() {
     <section
       id="behind-the-scenes"
       ref={ref}
-      className="py-20 bg-gray-50 dark:bg-gray-800"
+      className="py-20 bg-gray-50 dark:bg-gray-900 relative"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -39,7 +39,7 @@ export function BehindTheScenes() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ delay: 0.1, duration: 0.6 }}
-                className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg"
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors"
               >
                 <div className="flex items-center mb-4">
                   <Code2 className="text-primary-600 dark:text-primary-400 mr-3" size={28} />
@@ -62,7 +62,7 @@ export function BehindTheScenes() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg"
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors"
               >
                 <div className="flex items-center mb-4">
                   <Zap className="text-primary-600 dark:text-primary-400 mr-3" size={28} />
@@ -95,7 +95,7 @@ export function BehindTheScenes() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg"
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors"
               >
                 <div className="flex items-center mb-4">
                   <Palette className="text-primary-600 dark:text-primary-400 mr-3" size={28} />
@@ -128,7 +128,7 @@ export function BehindTheScenes() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg"
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors"
               >
                 <div className="flex items-center mb-4">
                   <Github className="text-primary-600 dark:text-primary-400 mr-3" size={28} />

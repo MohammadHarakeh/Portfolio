@@ -10,7 +10,7 @@ import { BehindTheScenes } from '@/components/sections/BehindTheScenes'
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative z-10">
       <Header />
       <Hero />
       <About />

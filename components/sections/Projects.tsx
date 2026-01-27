@@ -17,7 +17,7 @@ export function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="py-20 bg-white dark:bg-gray-900"
+      className="py-20 bg-white dark:bg-gray-900 relative"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
