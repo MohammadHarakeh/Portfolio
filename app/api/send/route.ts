@@ -37,97 +37,108 @@ async function verifyTurnstileToken(token: string): Promise<boolean> {
 export async function POST(request: Request) {
   try {
     // Get client IP for rate limiting
-    const clientIP = getClientIP(request)
+    const clientIP = getClientIP(request);
 
     // Rate limiting: 3 requests per 15 minutes per IP
-    const rateLimitResult = await rateLimit(clientIP, 3, 15 * 60 * 1000)
+    const rateLimitResult = await rateLimit(clientIP, 3, 15 * 60 * 1000);
     if (!rateLimitResult.success) {
       return Response.json(
         {
-          error: 'Too many requests. Please try again later.',
+          error: "Too many requests. Please try again later.",
           resetTime: rateLimitResult.resetTime,
         },
         {
           status: 429,
           headers: {
-            'Retry-After': Math.ceil(
-              (rateLimitResult.resetTime - Date.now()) / 1000
+            "Retry-After": Math.ceil(
+              (rateLimitResult.resetTime - Date.now()) / 1000,
             ).toString(),
-            'X-RateLimit-Remaining': '0',
-            'X-RateLimit-Reset': rateLimitResult.resetTime.toString(),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": rateLimitResult.resetTime.toString(),
           },
-        }
-      )
+        },
+      );
     }
 
     // Parse request body
-    const body = await request.json()
-    const { name, email, projectType, message, turnstileToken } = body
+    const body = await request.json();
+    const { name, email, projectType, message, turnstileToken } = body;
 
     // Verify CAPTCHA token
     if (!turnstileToken) {
       return Response.json(
-        { error: 'CAPTCHA verification required' },
-        { status: 400 }
-      )
+        { error: "CAPTCHA verification required" },
+        { status: 400 },
+      );
     }
 
-    const isCaptchaValid = await verifyTurnstileToken(turnstileToken)
+    const isCaptchaValid = await verifyTurnstileToken(turnstileToken);
     if (!isCaptchaValid) {
       return Response.json(
-        { error: 'CAPTCHA verification failed. Please try again.' },
-        { status: 400 }
-      )
+        { error: "CAPTCHA verification failed. Please try again." },
+        { status: 400 },
+      );
     }
 
     // Validate form data
-    const validation = validateContactForm({ name, email, projectType, message })
+    const validation = validateContactForm({
+      name,
+      email,
+      projectType,
+      message,
+    });
     if (!validation.isValid) {
       return Response.json(
-        { error: 'Validation failed', errors: validation.errors },
-        { status: 400 }
-      )
+        { error: "Validation failed", errors: validation.errors },
+        { status: 400 },
+      );
     }
 
     // Get contact email from environment or use default
-    const contactEmail = process.env.CONTACT_EMAIL || 'mohammad.d.harakeh@gmail.com'
+    const contactEmail =
+      process.env.CONTACT_EMAIL || "mohammad.d.harakeh@gmail.com";
+
+    // Get sender email from environment (use verified domain) or fallback to Resend test domain
+    const fromEmail =
+      process.env.RESEND_FROM_EMAIL ||
+      "Portfolio Contact <onboarding@resend.dev>";
 
     // Send email via Resend
     const { data, error } = await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>', // Update this after domain verification
+      from: fromEmail,
       to: [contactEmail],
       replyTo: email,
-      subject: `New Contact Form Submission: ${projectType || 'General Inquiry'}`,
+      subject: `New Contact Form Submission: ${projectType || "General Inquiry"}`,
       react: EmailTemplate({
         name,
         email,
-        projectType: projectType || 'Not specified',
+        projectType: projectType || "Not specified",
         message,
       }),
-    })
+    });
 
     if (error) {
-      console.error('Resend error:', error)
+      console.error("Resend error:", error);
       return Response.json(
-        { error: 'Failed to send email. Please try again later.' },
-        { status: 500 }
-      )
+        { error: "Failed to send email. Please try again later." },
+        { status: 500 },
+      );
     }
 
     return Response.json(
       {
         success: true,
-        message: 'Email sent successfully',
+        message: "Email sent successfully",
         id: data?.id,
       },
       {
         status: 200,
         headers: {
-          'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
-          'X-RateLimit-Reset': rateLimitResult.resetTime.toString(),
+          "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+          "X-RateLimit-Reset": rateLimitResult.resetTime.toString(),
         },
-      }
-    )
+      },
+    );
   } catch (error) {
     console.error('API error:', error)
     return Response.json(

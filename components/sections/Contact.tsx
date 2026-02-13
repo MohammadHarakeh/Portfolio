@@ -265,26 +265,28 @@ export function Contact() {
                 </div>
 
                 {/* CAPTCHA */}
-                <div className="flex justify-center">
-                  <Turnstile
-                    ref={turnstileRef}
-                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
-                    onSuccess={(token) => setTurnstileToken(token)}
-                    onError={() => {
-                      setTurnstileToken(null)
-                      setSubmitStatus({
-                        type: 'error',
-                        message: 'CAPTCHA verification failed. Please try again.',
-                      })
-                    }}
-                    onExpire={() => {
-                      setTurnstileToken(null)
-                    }}
-                    options={{
-                      theme: 'auto', // Will adapt to light/dark mode
-                    }}
-                  />
-                </div>
+                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                  <div className="flex justify-center">
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                      onSuccess={(token) => setTurnstileToken(token)}
+                      onError={() => {
+                        setTurnstileToken(null)
+                        setSubmitStatus({
+                          type: 'error',
+                          message: 'CAPTCHA verification failed. Please try again.',
+                        })
+                      }}
+                      onExpire={() => {
+                        setTurnstileToken(null)
+                      }}
+                      options={{
+                        theme: 'auto', // Will adapt to light/dark mode
+                      }}
+                    />
+                  </div>
+                )}
 
                 {/* Status Messages */}
                 {submitStatus.type && (
