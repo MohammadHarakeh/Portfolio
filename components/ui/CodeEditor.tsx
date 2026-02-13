@@ -151,13 +151,15 @@ export function CodeEditor({ code }: CodeEditorProps) {
       </div>
 
       {/* Game Area or Terminal */}
-      <div className={`h-[500px] bg-gray-900 overflow-x-hidden ${activeGame ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+      <div
+        className={`h-[400px] sm:h-[350px] md:h-[450px] lg:h-[500px] bg-gray-900 overflow-x-hidden ${activeGame ? "overflow-hidden" : "overflow-y-auto"}`}
+      >
         <AnimatePresence mode="wait">
-          {activeGame === 'snake' ? (
+          {activeGame === "snake" ? (
             <div key="snake" className="h-full">
               <SnakeGame onClose={() => setActiveGame(null)} />
             </div>
-          ) : activeGame === 'mines' ? (
+          ) : activeGame === "mines" ? (
             <div key="mines" className="h-full">
               <MinesweeperGame onClose={() => setActiveGame(null)} />
             </div>
@@ -177,7 +179,7 @@ export function CodeEditor({ code }: CodeEditorProps) {
                   </div>
                   <div className="pl-6 space-y-2">
                     <div className="text-2xl font-bold text-gray-200">
-                      Hi, I&apos;m{' '}
+                      Hi, I&apos;m{" "}
                       <span className="text-cyan-400">{personalInfo.name}</span>
                     </div>
                     <div className="text-lg text-yellow-400 font-semibold">
@@ -189,7 +191,7 @@ export function CodeEditor({ code }: CodeEditorProps) {
                   </div>
                 </div>
               </motion.div>
-              
+
               <div className="font-mono text-sm text-gray-300 space-y-1">
                 {output.map((line, index) => (
                   <div key={index} className="whitespace-pre-wrap">
@@ -204,9 +206,13 @@ export function CodeEditor({ code }: CodeEditorProps) {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    className="flex-1 bg-transparent text-gray-300 outline-none caret-green-400"
+                    className="flex-1 bg-transparent text-gray-300 outline-none caret-green-400 text-base sm:text-sm"
                     placeholder="Type a command..."
                     autoFocus
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
                   />
                 </div>
               </div>
@@ -215,5 +221,5 @@ export function CodeEditor({ code }: CodeEditorProps) {
         </AnimatePresence>
       </div>
     </motion.div>
-  )
+  );
 }
