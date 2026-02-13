@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { Send, Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react'
+import { Send, Mail, Phone, MapPin, Github, Linkedin, CheckCircle, XCircle } from 'lucide-react'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { personalInfo } from '@/lib/data'
 import { SOCIAL_LINKS } from '@/lib/constants'
 
@@ -17,16 +18,69 @@ export function Contact() {
     message: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null
+    message: string
+  }>({ type: null, message: '' })
+  const turnstileRef = useRef<any>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!turnstileToken) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Please complete the CAPTCHA verification',
+      })
+      return
+    }
+
     setIsSubmitting(true)
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      alert('Thank you for your message! I\'ll get back to you soon.')
+    setSubmitStatus({ type: null, message: '' })
+
+    try {
+      const response = await fetch('/api/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          turnstileToken,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      // Success
+      setSubmitStatus({
+        type: 'success',
+        message: 'Thank you for your message! I\'ll get back to you soon.',
+      })
       setFormData({ name: '', email: '', projectType: '', message: '' })
-    }, 1000)
+      setTurnstileToken(null)
+      // Reset CAPTCHA
+      if (turnstileRef.current) {
+        turnstileRef.current.reset()
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'An error occurred. Please try again.',
+      })
+      // Reset CAPTCHA on error
+      if (turnstileRef.current) {
+        turnstileRef.current.reset()
+      }
+      setTurnstileToken(null)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -210,9 +264,59 @@ export function Contact() {
                   />
                 </div>
 
+                {/* CAPTCHA */}
+                <div className="flex justify-center">
+                  <Turnstile
+                    ref={turnstileRef}
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
+                    onSuccess={(token) => setTurnstileToken(token)}
+                    onError={() => {
+                      setTurnstileToken(null)
+                      setSubmitStatus({
+                        type: 'error',
+                        message: 'CAPTCHA verification failed. Please try again.',
+                      })
+                    }}
+                    onExpire={() => {
+                      setTurnstileToken(null)
+                    }}
+                    options={{
+                      theme: 'auto', // Will adapt to light/dark mode
+                    }}
+                  />
+                </div>
+
+                {/* Status Messages */}
+                {submitStatus.type && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`p-4 rounded-lg flex items-center space-x-3 ${
+                      submitStatus.type === 'success'
+                        ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
+                        : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+                    }`}
+                  >
+                    {submitStatus.type === 'success' ? (
+                      <CheckCircle className="text-green-600 dark:text-green-400 flex-shrink-0" size={20} />
+                    ) : (
+                      <XCircle className="text-red-600 dark:text-red-400 flex-shrink-0" size={20} />
+                    )}
+                    <p
+                      className={`text-sm ${
+                        submitStatus.type === 'success'
+                          ? 'text-green-800 dark:text-green-200'
+                          : 'text-red-800 dark:text-red-200'
+                      }`}
+                    >
+                      {submitStatus.message}
+                    </p>
+                  </motion.div>
+                )}
+
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !turnstileToken}
                   className="w-full px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 >
                   {isSubmitting ? (
