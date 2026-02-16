@@ -1,10 +1,17 @@
-import { EmailTemplate } from '@/components/email-template'
 import { Resend } from 'resend'
 import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { validateContactForm } from '@/lib/email-validation'
-import React from 'react'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
 
 // Verify Turnstile token
 async function verifyTurnstileToken(token: string): Promise<boolean> {
@@ -115,31 +122,42 @@ export async function POST(request: Request) {
 
     // Send email via Resend
     try {
-      // Create React element for Resend
-      const emailReactElement = React.createElement(EmailTemplate, {
-        name,
-        email,
-        projectType: projectType || "Not specified",
-        message,
-      });
+      // Build HTML body (avoids React serialization issues in serverless)
+      const projectLabel = projectType || "Not specified";
+      const html = `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h1 style="color: #10b981; border-bottom: 2px solid #10b981; padding-bottom: 10px;">New Contact Form Submission</h1>
+          <div style="margin-top: 30px;">
+            <h2 style="color: #1f2937; margin-bottom: 20px;">Contact Information</h2>
+            <p><strong style="color: #4b5563;">Name:</strong> ${escapeHtml(name)}</p>
+            <p><strong style="color: #4b5563;">Email:</strong> <a href="mailto:${escapeHtml(email)}" style="color: #10b981;">${escapeHtml(email)}</a></p>
+            <p><strong style="color: #4b5563;">Project Type:</strong> ${escapeHtml(projectLabel)}</p>
+          </div>
+          <div style="margin-top: 30px;">
+            <h2 style="color: #1f2937; margin-bottom: 15px;">Message</h2>
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; border-left: 4px solid #10b981; white-space: pre-wrap;">${escapeHtml(message)}</div>
+          </div>
+          <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280;">This email was sent from your portfolio contact form. Reply directly to respond to ${escapeHtml(name)}.</p>
+        </div>
+      `;
 
       const { data, error } = await resend.emails.send({
         from: fromEmail,
         to: [contactEmail],
         replyTo: email,
         subject: `New Contact Form Submission: ${projectType || "General Inquiry"}`,
-        react: emailReactElement,
+        html,
       });
 
       if (error) {
         console.error("Resend error:", error);
-        // Resend returns { message, name, statusCode } - include message so you can fix the issue
-        const resendMessage = error?.message ?? null;
-        const resendCode = error?.name ?? null;
+        const err = error as { message?: string; name?: string };
+        const resendMessage = err?.message ?? (typeof error === 'string' ? error : 'Unknown Resend error');
+        const resendCode = err?.name ?? null;
         return Response.json(
           {
             error: "Failed to send email. Please try again later.",
-            ...(resendMessage && { reason: resendMessage }),
+            reason: resendMessage,
             ...(resendCode && { code: resendCode }),
           },
           { status: 500 }
@@ -167,31 +185,26 @@ export async function POST(request: Request) {
         console.error("Resend error stack:", resendError.stack);
         console.error("Resend error name:", resendError.name);
       }
-      // Return a more specific error instead of throwing
+      const caughtMessage = resendError instanceof Error ? resendError.message : String(resendError);
       return Response.json(
         {
           error: "Failed to send email. Please try again later.",
-          ...(process.env.NODE_ENV === 'development' && resendError instanceof Error && {
-            details: resendError.message
-          })
+          reason: caughtMessage,
         },
         { status: 500 }
       );
     }
   } catch (error) {
     console.error('API error:', error)
-    // Log more details for debugging
     if (error instanceof Error) {
       console.error('Error message:', error.message)
       console.error('Error stack:', error.stack)
     }
+    const outerMessage = error instanceof Error ? error.message : String(error);
     return Response.json(
-      { 
+      {
         error: 'An unexpected error occurred. Please try again later.',
-        // Include error details in development
-        ...(process.env.NODE_ENV === 'development' && error instanceof Error && {
-          details: error.message
-        })
+        reason: outerMessage,
       },
       { status: 500 }
     )

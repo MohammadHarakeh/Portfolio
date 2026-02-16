@@ -282,7 +282,9 @@ export function Contact() {
                         setTurnstileToken(null)
                       }}
                       options={{
-                        theme: 'auto', // Will adapt to light/dark mode
+                        theme: 'auto',
+                        size: 'normal',
+                        appearance: 'always',
                       }}
                     />
                   </div>
