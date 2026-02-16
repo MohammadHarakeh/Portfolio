@@ -24,18 +24,9 @@ export function Contact() {
     message: string
   }>({ type: null, message: '' })
   const turnstileRef = useRef<any>(null)
+  const pendingSubmitRef = useRef(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!turnstileToken) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Please complete the CAPTCHA verification',
-      })
-      return
-    }
-
+  const sendMessage = async (token: string) => {
     setIsSubmitting(true)
     setSubmitStatus({ type: null, message: '' })
 
@@ -47,7 +38,7 @@ export function Contact() {
         },
         body: JSON.stringify({
           ...formData,
-          turnstileToken,
+          turnstileToken: token,
         }),
       })
 
@@ -57,14 +48,12 @@ export function Contact() {
         throw new Error(data.error || 'Failed to send message')
       }
 
-      // Success
       setSubmitStatus({
         type: 'success',
         message: 'Thank you for your message! I\'ll get back to you soon.',
       })
       setFormData({ name: '', email: '', projectType: '', message: '' })
       setTurnstileToken(null)
-      // Reset CAPTCHA
       if (turnstileRef.current) {
         turnstileRef.current.reset()
       }
@@ -73,13 +62,40 @@ export function Contact() {
         type: 'error',
         message: error instanceof Error ? error.message : 'An error occurred. Please try again.',
       })
-      // Reset CAPTCHA on error
       if (turnstileRef.current) {
         turnstileRef.current.reset()
       }
       setTurnstileToken(null)
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (isSubmitting) return
+
+    if (turnstileToken) {
+      await sendMessage(turnstileToken)
+      return
+    }
+
+    if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && turnstileRef.current) {
+      pendingSubmitRef.current = true
+      turnstileRef.current.execute()
+    } else {
+      setSubmitStatus({
+        type: 'error',
+        message: 'CAPTCHA is not available. Please refresh and try again.',
+      })
+    }
+  }
+
+  const handleTurnstileSuccess = (token: string) => {
+    setTurnstileToken(token)
+    if (pendingSubmitRef.current) {
+      pendingSubmitRef.current = false
+      sendMessage(token)
     }
   }
 
@@ -305,32 +321,33 @@ export function Contact() {
                   />
                 </div>
 
-                {/* CAPTCHA */}
-                {/* {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-                  <div className="flex justify-center">
+                {/* Invisible CAPTCHA - runs when user clicks Send */}
+                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                  <div
+                    className="absolute opacity-0 pointer-events-none w-0 h-0 overflow-hidden"
+                    aria-hidden="true"
+                  >
                     <Turnstile
                       ref={turnstileRef}
                       siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-                      onSuccess={(token) => setTurnstileToken(token)}
+                      onSuccess={handleTurnstileSuccess}
                       onError={() => {
-                        setTurnstileToken(null);
+                        setTurnstileToken(null)
+                        pendingSubmitRef.current = false
                         setSubmitStatus({
-                          type: "error",
-                          message:
-                            "CAPTCHA verification failed. Please try again.",
-                        });
+                          type: 'error',
+                          message: 'Security check failed. Please try again.',
+                        })
                       }}
-                      onExpire={() => {
-                        setTurnstileToken(null);
-                      }}
+                      onExpire={() => setTurnstileToken(null)}
                       options={{
-                        theme: "auto",
-                        size: "normal",
-                        appearance: "always",
+                        theme: 'auto',
+                        size: 'invisible',
+                        execution: 'execute',
                       }}
                     />
                   </div>
-                )} */}
+                )}
 
                 {/* Status Messages */}
                 {submitStatus.type && (
@@ -368,7 +385,7 @@ export function Contact() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting || !turnstileToken}
+                  disabled={isSubmitting}
                   className="w-full px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 >
                   {isSubmitting ? (
