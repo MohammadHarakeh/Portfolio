@@ -82,6 +82,8 @@ export function Contact() {
 
     if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && turnstileRef.current) {
       pendingSubmitRef.current = true
+      setIsSubmitting(true)
+      setSubmitStatus({ type: null, message: '' })
       turnstileRef.current.execute()
     } else {
       setSubmitStatus({
@@ -334,6 +336,7 @@ export function Contact() {
                       onError={() => {
                         setTurnstileToken(null)
                         pendingSubmitRef.current = false
+                        setIsSubmitting(false)
                         setSubmitStatus({
                           type: 'error',
                           message: 'Security check failed. Please try again.',
