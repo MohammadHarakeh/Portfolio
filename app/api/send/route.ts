@@ -133,8 +133,15 @@ export async function POST(request: Request) {
 
       if (error) {
         console.error("Resend error:", error);
+        // Resend returns { message, name, statusCode } - include message so you can fix the issue
+        const resendMessage = error?.message ?? null;
+        const resendCode = error?.name ?? null;
         return Response.json(
-          { error: "Failed to send email. Please try again later." },
+          {
+            error: "Failed to send email. Please try again later.",
+            ...(resendMessage && { reason: resendMessage }),
+            ...(resendCode && { code: resendCode }),
+          },
           { status: 500 }
         );
       }
