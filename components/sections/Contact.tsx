@@ -108,7 +108,8 @@ export function Contact() {
             </h2>
             <div className="w-24 h-1 bg-primary-600 mx-auto"></div>
             <p className="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">
-              Have a project in mind? Let&apos;s work together to bring your ideas to life.
+              Have a project in mind? Let&apos;s work together to bring your
+              ideas to life.
             </p>
           </div>
 
@@ -125,7 +126,8 @@ export function Contact() {
                   Let&apos;s Connect
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-8">
-                  I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+                  I&apos;m always open to discussing new projects, creative
+                  ideas, or opportunities to be part of your vision.
                 </p>
               </div>
 
@@ -135,11 +137,18 @@ export function Contact() {
                   className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group"
                 >
                   <div className="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-lg group-hover:bg-primary-200 dark:group-hover:bg-primary-900/50 transition-colors flex-shrink-0">
-                    <Mail className="text-primary-600 dark:text-primary-400" size={24} />
+                    <Mail
+                      className="text-primary-600 dark:text-primary-400"
+                      size={24}
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
-                    <p className="text-gray-900 dark:text-white font-medium break-all">{personalInfo.email}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Email
+                    </p>
+                    <p className="text-gray-900 dark:text-white font-medium break-all">
+                      {personalInfo.email}
+                    </p>
                   </div>
                 </a>
 
@@ -148,21 +157,35 @@ export function Contact() {
                   className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group"
                 >
                   <div className="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-lg group-hover:bg-primary-200 dark:group-hover:bg-primary-900/50 transition-colors flex-shrink-0">
-                    <Phone className="text-primary-600 dark:text-primary-400" size={24} />
+                    <Phone
+                      className="text-primary-600 dark:text-primary-400"
+                      size={24}
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Phone</p>
-                    <p className="text-gray-900 dark:text-white font-medium break-all">{personalInfo.phone}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Phone
+                    </p>
+                    <p className="text-gray-900 dark:text-white font-medium break-all">
+                      {personalInfo.phone}
+                    </p>
                   </div>
                 </a>
 
                 <div className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                   <div className="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex-shrink-0">
-                    <MapPin className="text-primary-600 dark:text-primary-400" size={24} />
+                    <MapPin
+                      className="text-primary-600 dark:text-primary-400"
+                      size={24}
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Location</p>
-                    <p className="text-gray-900 dark:text-white font-medium break-words">{personalInfo.location}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Location
+                    </p>
+                    <p className="text-gray-900 dark:text-white font-medium break-words">
+                      {personalInfo.location}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -175,7 +198,10 @@ export function Contact() {
                   className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                   aria-label="GitHub"
                 >
-                  <Github className="text-gray-700 dark:text-gray-300" size={24} />
+                  <Github
+                    className="text-gray-700 dark:text-gray-300"
+                    size={24}
+                  />
                 </a>
                 <a
                   href={SOCIAL_LINKS.linkedin}
@@ -184,7 +210,10 @@ export function Contact() {
                   className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                   aria-label="LinkedIn"
                 >
-                  <Linkedin className="text-gray-700 dark:text-gray-300" size={24} />
+                  <Linkedin
+                    className="text-gray-700 dark:text-gray-300"
+                    size={24}
+                  />
                 </a>
               </div>
             </motion.div>
@@ -197,7 +226,10 @@ export function Contact() {
             >
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  >
                     Name
                   </label>
                   <input
@@ -213,7 +245,10 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  >
                     Email
                   </label>
                   <input
@@ -229,7 +264,10 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label
+                    htmlFor="projectType"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  >
                     Project Type
                   </label>
                   <select
@@ -249,7 +287,10 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  >
                     Message
                   </label>
                   <textarea
@@ -265,30 +306,31 @@ export function Contact() {
                 </div>
 
                 {/* CAPTCHA */}
-                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                {/* {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
                   <div className="flex justify-center">
                     <Turnstile
                       ref={turnstileRef}
                       siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
                       onSuccess={(token) => setTurnstileToken(token)}
                       onError={() => {
-                        setTurnstileToken(null)
+                        setTurnstileToken(null);
                         setSubmitStatus({
-                          type: 'error',
-                          message: 'CAPTCHA verification failed. Please try again.',
-                        })
+                          type: "error",
+                          message:
+                            "CAPTCHA verification failed. Please try again.",
+                        });
                       }}
                       onExpire={() => {
-                        setTurnstileToken(null)
+                        setTurnstileToken(null);
                       }}
                       options={{
-                        theme: 'auto',
-                        size: 'normal',
-                        appearance: 'always',
+                        theme: "auto",
+                        size: "normal",
+                        appearance: "always",
                       }}
                     />
                   </div>
-                )}
+                )} */}
 
                 {/* Status Messages */}
                 {submitStatus.type && (
@@ -296,21 +338,27 @@ export function Contact() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={`p-4 rounded-lg flex items-center space-x-3 ${
-                      submitStatus.type === 'success'
-                        ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
-                        : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+                      submitStatus.type === "success"
+                        ? "bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800"
+                        : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
                     }`}
                   >
-                    {submitStatus.type === 'success' ? (
-                      <CheckCircle className="text-green-600 dark:text-green-400 flex-shrink-0" size={20} />
+                    {submitStatus.type === "success" ? (
+                      <CheckCircle
+                        className="text-green-600 dark:text-green-400 flex-shrink-0"
+                        size={20}
+                      />
                     ) : (
-                      <XCircle className="text-red-600 dark:text-red-400 flex-shrink-0" size={20} />
+                      <XCircle
+                        className="text-red-600 dark:text-red-400 flex-shrink-0"
+                        size={20}
+                      />
                     )}
                     <p
                       className={`text-sm ${
-                        submitStatus.type === 'success'
-                          ? 'text-green-800 dark:text-green-200'
-                          : 'text-red-800 dark:text-red-200'
+                        submitStatus.type === "success"
+                          ? "text-green-800 dark:text-green-200"
+                          : "text-red-800 dark:text-red-200"
                       }`}
                     >
                       {submitStatus.message}
@@ -341,5 +389,5 @@ export function Contact() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

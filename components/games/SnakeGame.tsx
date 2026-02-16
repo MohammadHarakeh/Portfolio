@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 interface SnakeGameProps {
@@ -46,7 +46,7 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
     directionQueue.current = [];
   };
 
-  const handleDirectionChange = (newDirection: { x: number; y: number }) => {
+  const handleDirectionChange = useCallback((newDirection: { x: number; y: number }) => {
     if (gameOver || gameWon) return;
 
     const lastQueuedDirection =
@@ -94,7 +94,7 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
         directionQueue.current.push(newDirection);
       }
     }
-  };
+  }, [gameOver, gameWon]);
 
   // Keyboard controls
   useEffect(() => {
@@ -130,7 +130,7 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [gameOver, gameWon]);
+  }, [gameOver, gameWon, handleDirectionChange]);
 
   // Touch/drag handlers for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
