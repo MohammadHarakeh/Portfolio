@@ -2,8 +2,6 @@ import { Resend } from 'resend'
 import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { validateContactForm } from '@/lib/email-validation'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
@@ -119,6 +117,9 @@ export async function POST(request: Request) {
         { status: 500 }
       )
     }
+
+    // Initialize Resend client (after validation to prevent build-time errors)
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     // Send email via Resend
     try {
