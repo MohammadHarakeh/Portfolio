@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import './globals.css'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { InitialLoading } from "@/components/InitialLoading";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className={`${inter.className} ${inter.variable}`}>
         <InitialLoading />
         <ThemeProvider>{children}</ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
