@@ -12,53 +12,53 @@ export function InitialLoading() {
 
   useEffect(() => {
     // Animation sequence timing - smoother with longer duration
-    const phaseDuration = 200 // ms per phase - increased for smoother animation
-    const totalPhases = 8 // Phase 7: to top, Phase 8: to top-right, then show H
-    
+    const phaseDuration = 100; // ms per phase - increased for smoother animation
+    const totalPhases = 8; // Phase 7: to top, Phase 8: to top-right, then show H
+
     // Trigger phases sequentially with smoother timing
     for (let i = 1; i <= totalPhases; i++) {
       setTimeout(() => {
-        setAnimationPhase(i)
-      }, i * phaseDuration)
+        setAnimationPhase(i);
+      }, i * phaseDuration);
     }
 
     // Minimum display time - ensure H is visible for ~1 second
     // Phase 8 starts at 8 * 500 = 4000ms, so H appears at 4000ms
     // H should stay visible for at least 1 second, so until at least 5000ms
-    const minDisplayTime = 4500
-    const startTime = Date.now()
+    const minDisplayTime = 2000;
+    const startTime = Date.now();
 
     const hideLoading = () => {
-      const elapsed = Date.now() - startTime
-      const remaining = Math.max(0, minDisplayTime - elapsed)
-      
-      setTimeout(() => {
-        setIsFadingOut(true)
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 500)
-      }, remaining)
-    }
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, minDisplayTime - elapsed);
 
-    if (document.readyState === 'complete') {
-      setTimeout(hideLoading, 200)
+      setTimeout(() => {
+        setIsFadingOut(true);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      }, remaining);
+    };
+
+    if (document.readyState === "complete") {
+      setTimeout(hideLoading, 200);
     } else {
-      window.addEventListener('load', () => {
-        setTimeout(hideLoading, 200)
-      })
+      window.addEventListener("load", () => {
+        setTimeout(hideLoading, 200);
+      });
     }
 
     const maxTimer = setTimeout(() => {
-      setIsFadingOut(true)
+      setIsFadingOut(true);
       setTimeout(() => {
-        setIsLoading(false)
-      }, 500)
-    }, 6100)
+        setIsLoading(false);
+      }, 500);
+    }, 6100);
 
     return () => {
-      clearTimeout(maxTimer)
-      window.removeEventListener('load', hideLoading)
-    }
+      clearTimeout(maxTimer);
+      window.removeEventListener("load", hideLoading);
+    };
   }, [])
 
   if (!isLoading) return null
@@ -92,14 +92,14 @@ export function InitialLoading() {
   return (
     <div
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-gray-950 transition-opacity duration-500 ${
-        isFadingOut ? 'opacity-0' : 'opacity-100'
+        isFadingOut ? "opacity-0" : "opacity-100"
       }`}
       aria-label="Loading"
     >
       <div className="flex items-center justify-center">
         <div
           className={`transition-all duration-700 ${
-            isFadingOut ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+            isFadingOut ? "opacity-0 scale-95" : "opacity-100 scale-100"
           }`}
         >
           <svg
@@ -112,10 +112,10 @@ export function InitialLoading() {
             <defs>
               {/* Glow filter */}
               <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                 <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
             </defs>
@@ -126,47 +126,47 @@ export function InitialLoading() {
               points="75,15 135,45 135,105 75,135 15,105 15,45"
               fill="none"
               stroke="#00ff41"
-              strokeWidth="4.5"
+              strokeWidth="3"
               opacity="0.9"
-              filter="url(#glow)"
               strokeLinecap="round"
               strokeLinejoin="round"
               style={{
                 strokeDasharray: HEXAGON_PERIMETER * 2,
                 strokeDashoffset: getStrokeDashoffset() + HEXAGON_PERIMETER,
-                transition: 'stroke-dashoffset 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                transformOrigin: 'center',
+                transition:
+                  "stroke-dashoffset 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                transformOrigin: "center",
               }}
             />
 
             {/* Center "M" letter - appears after phase 8 (when stroke reaches top-right) */}
             <g
-  style={{
-    opacity: animationPhase >= 8 ? 1 : 0,
-    transform: animationPhase >= 8 ? 'scale(1)' : 'scale(0.5)',
-    transformOrigin: '75px 75px',
-    transition: 'all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-  }}
->
-  {/* Single thick filled M */}
-  <text
-    x="75"
-    y="75"
-    fontSize="72"
-    fontWeight="900"
-    fill="#00ff41"
-    textAnchor="middle"
-    dominantBaseline="middle"
-    style={{
-      fontFamily: 'var(--font-poppins), Poppins, sans-serif',
-    }}
-  >
-    M
-  </text>
-</g>
+              style={{
+                opacity: animationPhase >= 8 ? 1 : 0,
+                transform: animationPhase >= 8 ? "scale(1)" : "scale(0.5)",
+                transformOrigin: "75px 75px",
+                transition: "all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              }}
+            >
+              {/* Single thick filled M */}
+              <text
+                x="75"
+                y="75"
+                fontSize="64"
+                fontWeight="700"
+                fill="#00ff41"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                style={{
+                  fontFamily: "var(--font-inter), Inter, sans-serif",
+                }}
+              >
+                M
+              </text>
+            </g>
           </svg>
         </div>
       </div>
     </div>
-  )
+  );
 }
