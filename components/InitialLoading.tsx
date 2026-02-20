@@ -156,7 +156,7 @@ export function InitialLoading() {
                 fontWeight="700"
                 fill="#00ff41"
                 textAnchor="middle"
-                dominantBaseline="middle"
+                dominantBaseline="central"
                 style={{
                   fontFamily: "var(--font-inter), Inter, sans-serif",
                 }}
