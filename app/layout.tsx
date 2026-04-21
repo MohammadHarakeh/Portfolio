@@ -12,11 +12,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Mohammad Harake | Full-Stack Developer',
-  description: 'Portfolio of Mohammad Harake - Full-Stack Developer specializing in React, Next.js, TypeScript, and Node.js',
-  keywords: ['Full-Stack Developer', 'React', 'Next.js', 'TypeScript', 'Node.js', 'Web Development'],
+  title: 'Mohammad Harake | Software Developer',
+  description: 'Portfolio of Mohammad Harake - Software Developer specializing in responsive React and Next.js applications with modern full-stack workflows.',
+  keywords: ['Software Developer', 'React', 'Next.js', 'TypeScript', 'Node.js', 'Web Development'],
   authors: [{ name: 'Mohammad Harake' }],
   creator: 'Mohammad Harake',
+  icons: {
+    icon: '/images/icon.png',
+    shortcut: '/images/icon.png',
+    apple: '/images/icon.png',
+  },
 }
 
 export default function RootLayout({

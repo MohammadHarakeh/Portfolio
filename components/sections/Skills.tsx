@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { skills } from '@/lib/data'
-import { Code2, Database, Wrench, Layers, ChevronDown } from 'lucide-react'
+import { Code2, Database, Wrench, Layers, ChevronDown, Brain } from 'lucide-react'
 
 const categoryConfig = {
   language: {
@@ -27,6 +27,11 @@ const categoryConfig = {
     icon: Wrench,
     color: 'text-orange-600 dark:text-orange-400',
   },
+  other: {
+    name: 'Technical Skills',
+    icon: Brain,
+    color: 'text-cyan-600 dark:text-cyan-400',
+  },
 }
 
 export function Skills() {
@@ -43,7 +48,7 @@ export function Skills() {
     return skills.filter((skill) => skill.category === category)
   }
 
-  const categories = ['language', 'framework', 'database', 'tool']
+  const categories = ['language', 'framework', 'database', 'tool', 'other']
 
   const toggleCategory = (category: string) => {
     setExpandedCategories((prev) => {

@@ -18,38 +18,36 @@ export function CodeEditor({ code }: CodeEditorProps) {
   const [copied, setCopied] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const navigateToSection = (sectionId: string, label: string) => {
+    const element = document.querySelector(`#${sectionId}`)
+    if (!element) {
+      return [`Section not found: ${label}`, '']
+    }
+
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    return [`Navigating to ${label}...`, '']
+  }
+
   const commands = {
     help: () => [
       'Available commands:',
+      '  home      - Go to Home section',
+      '  about     - Go to About section',
+      '  skills    - Go to Skills section',
+      '  projects  - Go to Projects section',
+      '  experience- Go to Experience section',
+      '  contact   - Go to Contact section',
       '  snake     - Play Snake game',
-      '  mines    - Play Minesweeper',
-      '  clear    - Clear the terminal',
-      '  about    - Show about info',
-      '  skills   - Show my skills',
-      '  projects - Show my projects',
+      '  mines     - Play Minesweeper',
+      '  clear     - Clear the terminal',
       '',
     ],
-    about: () => [
-      'Mohammad Harake',
-      'Full-Stack Developer',
-      'Location: Beirut, Lebanon',
-      'Passion: Building innovative solutions',
-      '',
-    ],
-    skills: () => [
-      'Languages: JavaScript, TypeScript, Python, PHP, Java, SQL',
-      'Frameworks: React, Next.js, Node.js, Laravel, Django',
-      'Databases: MongoDB, MySQL',
-      'Tools: Git, GitHub, Postman, Figma',
-      '',
-    ],
-    projects: () => [
-      'BookHub - Version control for writers',
-      'Subway System - Ticket booking platform',
-      'Digital Chain - Responsive website',
-      'Kids Security - Landing page',
-      '',
-    ],
+    home: () => navigateToSection('home', 'Home'),
+    about: () => navigateToSection('about', 'About'),
+    skills: () => navigateToSection('skills', 'Skills'),
+    projects: () => navigateToSection('projects', 'Projects'),
+    experience: () => navigateToSection('experience', 'Experience'),
+    contact: () => navigateToSection('contact', 'Contact'),
     clear: () => {
       setOutput([])
       return []

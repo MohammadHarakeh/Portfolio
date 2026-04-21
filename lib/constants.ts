@@ -8,8 +8,8 @@ export const NAV_ITEMS = [
 ]
 
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/mohammad-harake',
-  linkedin: 'https://linkedin.com/in/mohammad-harake',
+  github: 'https://github.com/MohammadHarakeh',
+  linkedin: 'https://linkedin.com/in/mohammad-d-harakeh',
   email: 'mohammad.d.harakeh@gmail.com',
 }
 

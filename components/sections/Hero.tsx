@@ -9,10 +9,10 @@ import { personalInfo } from '@/lib/data'
 const codeSnippet = `// Welcome to my portfolio
 const developer = {
   name: 'Mohammad Harake',
-  role: 'Full-Stack Developer',
-  skills: ['React', 'Next.js', 'TypeScript', 'Node.js'],
+  role: 'Software Developer',
+  skills: ['React', 'Next.js', 'TypeScript', 'Material UI'],
   location: 'Beirut, Lebanon',
-  passion: 'Building innovative solutions'
+  passion: 'Building high-impact web products'
 };
 
 function buildPortfolio() {

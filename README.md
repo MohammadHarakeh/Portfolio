@@ -8,7 +8,7 @@ A modern, balanced portfolio website showcasing my full-stack development skills
 - 🌓 **Dark Mode**: Full dark/light mode support with system preference detection
 - 📱 **Responsive**: Fully responsive design that works on all devices
 - ⚡ **Performance**: Optimized with Next.js 14 App Router and server-side rendering
-- 🎯 **Interactive Elements**: 
+- 🎯 **Interactive Elements**:
   - Animated code editor in hero section
   - Interactive skill visualization with project connections
   - Smooth scroll animations
@@ -37,6 +37,7 @@ A modern, balanced portfolio website showcasing my full-stack development skills
 ### Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 # or
@@ -44,6 +45,7 @@ yarn install
 ```
 
 2. Run the development server:
+
 ```bash
 npm run dev
 # or
@@ -85,6 +87,7 @@ portfolio/
 ### Update Personal Information
 
 Edit `lib/data.ts` to update:
+
 - Personal information (name, email, location, etc.)
 - Skills and technologies
 - Projects
@@ -100,6 +103,7 @@ Edit `lib/data.ts` to update:
 ## Deployment
 
 This portfolio can be deployed on:
+
 - **Vercel** (recommended for Next.js)
 - **Netlify**
 - **Any static hosting service** (after building)
@@ -119,5 +123,5 @@ This project is open source and available for personal use.
 - **Email**: mohammad.d.harakeh@gmail.com
 - **Phone**: +961 70860668
 - **Location**: Beirut, Lebanon
-- **LinkedIn**: [Mohammad Harake](https://linkedin.com/in/mohammad-harake)
-- **GitHub**: [mohammad-harake](https://github.com/mohammad-harake)
+- **LinkedIn**: [Mohammad Harake](https://linkedin.com/in/mohammad-d-harakeh)
+- **GitHub**: [MohammadHarakeh](https://github.com/MohammadHarakeh)
