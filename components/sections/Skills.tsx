@@ -66,7 +66,7 @@ export function Skills() {
     <section
       id="skills"
       ref={sectionRef}
-      className="py-20 bg-gray-50 dark:bg-gray-900 relative"
+      className="section-shell"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headerRef}>
@@ -76,10 +76,10 @@ export function Skills() {
             transition={{ duration: 0.6 }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+              <h2 className="section-title">
                 Skills & Technologies
               </h2>
-              <div className="w-24 h-1 bg-primary-600 mx-auto mb-4"></div>
+              <div className="section-divider mb-4"></div>
               <p className="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">
                 Technologies I work with to build amazing applications
               </p>
@@ -102,11 +102,11 @@ export function Skills() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={isCategoriesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
                 transition={{ delay: categoryIndex * 0.15, duration: 0.6, ease: 'easeOut' }}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500/50 transition-colors overflow-hidden"
+                className="minimal-card hover:border-primary-500/50 transition-colors overflow-hidden"
               >
                 <button
                   onClick={() => toggleCategory(category)}
-                  className="w-full flex items-center justify-between p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200 text-left"
+                  className="w-full flex items-center justify-between p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 text-left"
                 >
                   <div className="flex items-center">
                     <Icon className={`${config.color} mr-3`} size={24} />

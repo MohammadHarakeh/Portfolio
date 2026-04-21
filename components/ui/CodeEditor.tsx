@@ -121,10 +121,10 @@ export function CodeEditor({ code }: CodeEditorProps) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="relative bg-gray-900 rounded-lg shadow-2xl overflow-hidden border border-gray-700 w-full max-w-4xl"
+      className="relative w-full max-w-4xl overflow-hidden rounded-lg border border-gray-700 bg-zinc-950 shadow-2xl shadow-black/40 ring-1 ring-black/30"
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-gray-800 border-b border-gray-700 flex-shrink-0">
+      <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-800 bg-gray-900 px-4 py-3">
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -150,7 +150,7 @@ export function CodeEditor({ code }: CodeEditorProps) {
 
       {/* Game Area or Terminal */}
       <div
-        className={`h-[400px] sm:h-[350px] md:h-[450px] lg:h-[500px] bg-gray-900 overflow-x-hidden ${activeGame ? "overflow-hidden" : "overflow-y-auto"}`}
+        className={`h-[400px] sm:h-[350px] md:h-[450px] lg:h-[500px] overflow-x-hidden bg-zinc-950 ${activeGame ? "overflow-hidden" : "overflow-y-auto"}`}
       >
         <AnimatePresence mode="wait">
           {activeGame === "snake" ? (
@@ -162,7 +162,7 @@ export function CodeEditor({ code }: CodeEditorProps) {
               <MinesweeperGame onClose={() => setActiveGame(null)} />
             </div>
           ) : (
-            <div key="terminal" className="p-4 min-h-full">
+            <div key="terminal" className="min-h-full bg-zinc-950 p-4">
               {/* Intro Section - Always show at top */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}

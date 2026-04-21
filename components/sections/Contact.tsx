@@ -112,7 +112,7 @@ export function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="py-20 bg-white dark:bg-gray-900 relative"
+      className="section-shell"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -121,10 +121,10 @@ export function Contact() {
           transition={{ duration: 0.6 }}
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+            <h2 className="section-title">
               Get In Touch
             </h2>
-            <div className="w-24 h-1 bg-primary-600 mx-auto"></div>
+            <div className="section-divider"></div>
             <p className="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">
               Have a project in mind? Let&apos;s work together to bring your
               ideas to life.

@@ -7,19 +7,25 @@ import { Projects } from '@/components/sections/Projects'
 import { Experience } from '@/components/sections/Experience'
 import { Contact } from '@/components/sections/Contact'
 import { BehindTheScenes } from '@/components/sections/BehindTheScenes'
+import { DevStackBackdrop } from '@/components/layout/DevStackBackdrop'
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative z-10">
-      <Header />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Experience />
-      <Contact />
-      <BehindTheScenes />
-      <Footer />
+    <main className="relative min-h-screen isolate">
+      {/* Static wash + soft radials; DevStackBackdrop adds the single slow 3D motion */}
+      <div className="page-ambient" aria-hidden="true" />
+      <DevStackBackdrop />
+      <div className="relative z-10">
+        <Header />
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Contact />
+        <BehindTheScenes />
+        <Footer />
+      </div>
     </main>
   )
 }

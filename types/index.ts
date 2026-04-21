@@ -3,6 +3,10 @@ export interface Project {
   title: string
   description: string
   longDescription?: string
+  problem?: string
+  solution?: string
+  impact?: string
+  role?: string
   image?: string
   technologies: string[]
   githubUrl?: string

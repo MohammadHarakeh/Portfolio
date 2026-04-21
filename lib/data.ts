@@ -158,10 +158,18 @@ export const projects: Project[] = [
   {
     id: "bookhub",
     title: "BookHub",
+    image: "/images/BookHubLogo.png",
     description:
       "A version control website where writers can collaborate to create unique stories.",
     longDescription:
       "BookHub is an innovative platform that enables writers to collaborate in real-time on creative stories. The platform features live collaboration, version control, and AI-powered assistance to enhance the writing experience.",
+    problem:
+      "Writers needed a better way to co-author stories without losing edit history or blocking each other.",
+    solution:
+      "Built a collaborative writing platform with real-time updates, version tracking, and AI-assisted content support.",
+    impact:
+      "Enabled faster co-authoring sessions with clearer revision history and less editing friction.",
+    role: "Full-stack developer (frontend-heavy)",
     technologies: ["Next.js", "TypeScript", "Node.js", "MongoDB"],
     githubUrl: "https://github.com/MohammadHarakeh/bookhub",
     featured: true,
@@ -181,6 +189,13 @@ export const projects: Project[] = [
       "A collaborative platform where users can book tickets for the subway near them.",
     longDescription:
       "A comprehensive subway ticket booking system with interactive map display and integrated chat system for customer support.",
+    problem:
+      "Commuters needed a simpler way to discover routes and complete ticket booking from one interface.",
+    solution:
+      "Created an end-to-end booking flow with interactive station mapping and support chat integration.",
+    impact:
+      "Improved booking clarity and reduced navigation friction for users planning daily routes.",
+    role: "Full-stack developer",
     technologies: ["React.js", "Laravel", "MySQL", "phpMyAdmin"],
     githubUrl: "https://github.com/MohammadHarakeh/subway-system",
     featured: true,
@@ -199,6 +214,13 @@ export const projects: Project[] = [
     description: "A responsive website with smooth UI built using TypeScript.",
     longDescription:
       "A modern, responsive website with seamless backend integration, focusing on usability and performance.",
+    problem:
+      "The product needed a modern responsive interface that stayed consistent across devices.",
+    solution:
+      "Developed a reusable TypeScript React frontend with performance-focused UI patterns.",
+    impact:
+      "Delivered a smoother cross-device experience with cleaner navigation and stronger responsiveness.",
+    role: "Frontend developer",
     technologies: ["TypeScript", "React", "Node.js"],
     featured: false,
     category: "fullstack",
@@ -212,6 +234,7 @@ export const projects: Project[] = [
   {
     id: "kids-security",
     title: "Kids Security",
+    image: "/images/KidsSecurityLogo.png",
     description:
       "A landing page showcasing terms and agreement services with professional UI/UX design.",
     longDescription:
@@ -229,6 +252,7 @@ export const projects: Project[] = [
   {
     id: "beeline-kids",
     title: "BeeLineKids",
+    image: "/images/BeeLineLogo.png",
     description:
       "Landing page with backend integration for user sign-up: collect numbers, send OTP, and subscribe users with a custom design.",
     longDescription:
@@ -246,6 +270,7 @@ export const projects: Project[] = [
   {
     id: "bestshaharlar",
     title: "Bestshaharlar",
+    image: "/images/BestShaharlarLogo.png",
     description:
       "Landing page with backend APIs for user sign-up, OTP verification, and subscription with a distinct design.",
     longDescription:
@@ -284,6 +309,13 @@ export const projects: Project[] = [
       "Spin-the-wheel web app with configurable segment probabilities; users sign up via phone and OTP, then access daily rewards.",
     longDescription:
       "A spin-the-wheel experience where segment landing probabilities are configurable. Users enter their number, receive an OTP, subscribe to the platform, and are shown the wheel with daily rewards.",
+    problem:
+      "The business required an engagement mechanic with controlled reward distribution and user verification.",
+    solution:
+      "Implemented a configurable probability wheel plus phone/OTP onboarding and subscription flow.",
+    impact:
+      "Increased repeat engagement through daily rewards while keeping prize distribution controlled.",
+    role: "Full-stack developer",
     technologies: ["TypeScript", "React", "Node.js"],
     featured: false,
     category: "fullstack",
@@ -296,7 +328,7 @@ export const projects: Project[] = [
   },
   {
     id: "quickf-fun",
-    title: "quickfFun",
+    title: "Quick Fun",
     description: "Front-end project with a focus on styling and layout.",
     longDescription:
       "A front-end project built with CSS, emphasizing design and user interface.",

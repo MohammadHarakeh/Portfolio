@@ -37,16 +37,9 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-transparent"
     >
-      {/* Background decoration - Neon green glows */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-primary-500 rounded-full mix-blend-screen filter blur-3xl opacity-10 dark:opacity-20 animate-blob"></div>
-        <div className="absolute top-40 right-10 w-96 h-96 bg-primary-400 rounded-full mix-blend-screen filter blur-3xl opacity-8 dark:opacity-15 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-1/2 w-96 h-96 bg-primary-600 rounded-full mix-blend-screen filter blur-3xl opacity-10 dark:opacity-20 animate-blob animation-delay-4000"></div>
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20 lg:pt-24 pb-20 lg:pb-24">
+      <div className="container relative z-10 mx-auto px-4 pb-20 pt-20 sm:px-6 lg:px-8 lg:pb-24 lg:pt-24">
         <div className="max-w-5xl mx-auto">
           {/* Terminal */}
           <motion.div
@@ -67,13 +60,13 @@ export function Hero() {
           >
             <a
               href="#projects"
-              className="px-8 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors shadow-lg hover:shadow-xl text-center"
+              className="px-8 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-colors shadow-md hover:shadow-lg text-center"
             >
               View My Work
             </a>
             <a
               href="#contact"
-              className="px-8 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg font-semibold hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors text-center"
+              className="px-8 py-3 border border-primary-600/70 text-primary-700 dark:text-primary-300 rounded-xl font-semibold hover:bg-primary-50/70 dark:hover:bg-primary-900/20 transition-colors text-center"
             >
               Get In Touch
             </a>
@@ -89,7 +82,7 @@ export function Hero() {
         >
           <button
             onClick={scrollToAbout}
-            className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full p-3 shadow-lg hover:shadow-xl"
+            className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors bg-white/85 dark:bg-gray-900/85 backdrop-blur-sm rounded-full p-3 shadow-md hover:shadow-lg border border-gray-200/70 dark:border-gray-700/70"
             aria-label="Scroll down"
           >
             <ChevronDown className="animate-bounce" size={20} />

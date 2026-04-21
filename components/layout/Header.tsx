@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('#home')
   const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
@@ -17,6 +18,26 @@ export function Header() {
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const sections = NAV_ITEMS.map((item) => document.querySelector(item.href)).filter(Boolean) as Element[]
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(`#${entry.target.id}`)
+          }
+        })
+      },
+      {
+        rootMargin: '-35% 0px -55% 0px',
+        threshold: 0.1,
+      }
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
   }, [])
 
   const handleNavClick = (href: string) => {
@@ -32,7 +53,7 @@ export function Header() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg'
+          ? 'bg-white/85 dark:bg-gray-900/85 backdrop-blur-xl border-b border-gray-200/70 dark:border-gray-700/70 shadow-sm'
           : 'bg-transparent'
       )}
     >
@@ -59,7 +80,12 @@ export function Header() {
                   e.preventDefault()
                   handleNavClick(item.href)
                 }}
-                className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                className={cn(
+                  'text-sm font-medium transition-colors',
+                  activeSection === item.href
+                    ? 'text-primary-700 dark:text-primary-300'
+                    : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
+                )}
               >
                 {item.label}
               </a>
