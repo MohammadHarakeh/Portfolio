@@ -3,9 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* Light canvas: a step darker than before so grid + cards read clearly */
+  --canvas-light: #dde2e9;
+  --foreground-rgb: 17, 24, 39;
+  --background-start-rgb: 221, 226, 233;
+  --background-end-rgb: 221, 226, 233;
 }
 
 .dark {
@@ -27,7 +29,11 @@ html {
 body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-end-rgb));
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 /* Page background lives on <main> (.page-ambient + DevStackBackdrop) — avoid duplicate fixed body layers */
@@ -66,7 +72,7 @@ body {
 
 /* Code editor styles */
 .code-editor {
-  font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+  font-family: "Fira Code", "Monaco", "Courier New", monospace;
 }
 
 /* Line clamp utility */
@@ -111,13 +117,12 @@ body {
     bottom: 0;
     z-index: 0;
     pointer-events: none;
+    /* Light: slightly deeper cool gray */
     background: linear-gradient(
       180deg,
-      rgb(249 250 251) 0%,
-      rgb(255 255 255) 14%,
-      rgb(255 255 255) 42%,
-      rgb(248 250 252) 68%,
-      rgb(243 244 246) 100%
+      rgb(228 232 238) 0%,
+      rgb(221 226 233) 45%,
+      rgb(214 219 227) 100%
     );
   }
 
@@ -133,28 +138,29 @@ body {
   }
 
   .page-ambient::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
+    /* Softer tints in light mode so the canvas stays visibly white */
     background:
       radial-gradient(
         ellipse 120% 55% at 50% -8%,
-        rgba(59, 130, 246, 0.1) 0%,
+        rgba(59, 130, 246, 0.045) 0%,
         transparent 52%
       ),
       radial-gradient(
         ellipse 110% 50% at 50% 108%,
-        rgba(148, 163, 184, 0.14) 0%,
+        rgba(148, 163, 184, 0.055) 0%,
         transparent 52%
       ),
       radial-gradient(
         circle at 12% 38%,
-        rgba(59, 130, 246, 0.06) 0%,
+        rgba(59, 130, 246, 0.03) 0%,
         transparent 38%
       ),
       radial-gradient(
         circle at 88% 62%,
-        rgba(148, 163, 184, 0.1) 0%,
+        rgba(148, 163, 184, 0.045) 0%,
         transparent 40%
       );
   }
@@ -193,7 +199,7 @@ body {
     transform: translate(-50%, -50%);
     perspective: 1100px;
     perspective-origin: 50% 42%;
-    opacity: 0.2;
+    opacity: 0.12;
   }
 
   .dark .dev-stack-perspective {
@@ -249,9 +255,21 @@ body {
     transform: translateZ(34px);
     border: 2px solid rgba(59, 130, 246, 0.32);
     background-image:
-      radial-gradient(circle at 24% 50%, rgba(59, 130, 246, 0.45) 2px, transparent 3px),
-      radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.45) 2px, transparent 3px),
-      radial-gradient(circle at 76% 50%, rgba(59, 130, 246, 0.45) 2px, transparent 3px),
+      radial-gradient(
+        circle at 24% 50%,
+        rgba(59, 130, 246, 0.45) 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(59, 130, 246, 0.45) 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 76% 50%,
+        rgba(59, 130, 246, 0.45) 2px,
+        transparent 3px
+      ),
       linear-gradient(
         145deg,
         rgba(255, 255, 255, 0.65),
@@ -263,14 +281,22 @@ body {
   .dark .dev-stack-layer--api {
     border-color: rgba(96, 165, 250, 0.32);
     background-image:
-      radial-gradient(circle at 24% 50%, rgba(96, 165, 250, 0.5) 2px, transparent 3px),
-      radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.5) 2px, transparent 3px),
-      radial-gradient(circle at 76% 50%, rgba(96, 165, 250, 0.5) 2px, transparent 3px),
-      linear-gradient(
-        145deg,
-        rgba(30, 41, 59, 0.8),
-        rgba(23, 37, 84, 0.35)
-      );
+      radial-gradient(
+        circle at 24% 50%,
+        rgba(96, 165, 250, 0.5) 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(96, 165, 250, 0.5) 2px,
+        transparent 3px
+      ),
+      radial-gradient(
+        circle at 76% 50%,
+        rgba(96, 165, 250, 0.5) 2px,
+        transparent 3px
+      ),
+      linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(23, 37, 84, 0.35));
   }
 
   /* UI layer (top) */
@@ -316,4 +342,69 @@ body {
   .dev-stack-rotator {
     animation: none;
   }
+}
+
+/*
+ * Light theme: soft “darker white” canvas (easier on eyes than #fff).
+ */
+html:not(.dark),
+html:not(.dark) body {
+  background-color: var(--canvas-light) !important;
+}
+
+html:not(.dark) main {
+  background-color: var(--canvas-light) !important;
+}
+
+html:not(.dark) .page-ambient {
+  background: linear-gradient(
+    180deg,
+    rgb(228 232 238) 0%,
+    rgb(221 226 233) 45%,
+    rgb(214 219 227) 100%
+  ) !important;
+}
+
+html:not(.dark) .page-ambient::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Light: show backdrop for grid; hide only the 3D stack (keeps canvas neutral) */
+html:not(.dark) .dev-stack-perspective {
+  display: none !important;
+}
+
+/* Dev layout grid — darker lines in light so the pattern reads */
+[data-dev-grid] {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-size: 48px 48px;
+}
+
+html:not(.dark) [data-dev-grid] {
+  opacity: 1;
+  /* Slate-500-ish lines so they read on --canvas-light */
+  background-image:
+    linear-gradient(90deg, rgb(100 116 139 / 0.18) 1px, transparent 1px),
+    linear-gradient(0deg, rgb(100 116 139 / 0.18) 1px, transparent 1px);
+}
+
+.dark [data-dev-grid] {
+  opacity: 0.14;
+  background-image:
+    linear-gradient(90deg, rgb(148 163 184 / 0.35) 1px, transparent 1px),
+    linear-gradient(0deg, rgb(148 163 184 / 0.35) 1px, transparent 1px);
+}
+
+/* Backdrop `{` `}` — very faint in light before; darken for light only */
+html:not(.dark) .dev-stack-brace {
+  color: rgb(51 65 85);
+  opacity: 0.55;
+}
+
+.dark .dev-stack-brace {
+  color: rgb(148 163 184);
+  opacity: 0.22;
 }

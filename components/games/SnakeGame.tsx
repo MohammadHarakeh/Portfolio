@@ -7,12 +7,45 @@ interface SnakeGameProps {
   onClose: () => void
 }
 
-const GRID_SIZE = 15;
-const WIN_SCORE = 225;
+function pickGridSize(width: number) {
+  if (width < 400) return 10;
+  if (width < 640) return 12;
+  return 15;
+}
+
+function initialSnakeAndFood(size: number) {
+  const cx = Math.floor(size / 2);
+  const cy = Math.floor(size / 2);
+  let fx = cx + 2;
+  let fy = cy;
+  if (fx >= size) fx = cx - 2;
+  if (fx < 0) fx = 1;
+  if (fx === cx && fy === cy) fy = (cy + 1) % size;
+  return {
+    snake: [{ x: cx, y: cy }],
+    food: { x: fx, y: fy },
+  };
+}
 
 export function SnakeGame({ onClose }: SnakeGameProps) {
-  const [snake, setSnake] = useState([{ x: 7, y: 7 }]);
-  const [food, setFood] = useState({ x: 10, y: 10 });
+  const [gridSize, setGridSize] = useState(() =>
+    typeof window !== "undefined" ? pickGridSize(window.innerWidth) : 15,
+  );
+  const gridSizeRef = useRef(
+    typeof window !== "undefined" ? pickGridSize(window.innerWidth) : 15,
+  );
+  const winScore = gridSize * gridSize;
+
+  const [snake, setSnake] = useState(() =>
+    initialSnakeAndFood(
+      typeof window !== "undefined" ? pickGridSize(window.innerWidth) : 15,
+    ).snake,
+  );
+  const [food, setFood] = useState(() =>
+    initialSnakeAndFood(
+      typeof window !== "undefined" ? pickGridSize(window.innerWidth) : 15,
+    ).food,
+  );
   const [direction, setDirection] = useState({ x: 1, y: 0 });
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
@@ -23,19 +56,40 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile device
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+    gridSizeRef.current = gridSize;
+  }, [gridSize]);
+
+  // Smaller grid + layout hints on narrow viewports (terminal panel)
+  useEffect(() => {
+    const sync = () => {
+      const w = window.innerWidth;
+      setGridSize(pickGridSize(w));
+      setIsMobile(w < 768 || "ontouchstart" in window);
     };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    sync();
+    window.addEventListener("resize", sync);
+    return () => window.removeEventListener("resize", sync);
   }, []);
 
+  useEffect(() => {
+    const { snake: s, food: f } = initialSnakeAndFood(gridSize);
+    setSnake(s);
+    setFood(f);
+    const initialDirection = { x: 1, y: 0 };
+    setDirection(initialDirection);
+    currentDirection.current = initialDirection;
+    setGameOver(false);
+    setGameWon(false);
+    setScore(0);
+    setFoodEaten(false);
+    directionQueue.current = [];
+  }, [gridSize]);
+
   const resetGame = () => {
-    setSnake([{ x: 7, y: 7 }]);
-    setFood({ x: 10, y: 10 });
+    const { snake: s, food: f } = initialSnakeAndFood(gridSizeRef.current);
+    setSnake(s);
+    setFood(f);
     const initialDirection = { x: 1, y: 0 };
     setDirection(initialDirection);
     currentDirection.current = initialDirection;
@@ -208,11 +262,12 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
         };
 
         // Check wall collision - game over
+        const size = gridSizeRef.current;
         if (
           head.x < 0 ||
-          head.x >= GRID_SIZE ||
+          head.x >= size ||
           head.y < 0 ||
-          head.y >= GRID_SIZE
+          head.y >= size
         ) {
           setGameOver(true);
           return prev;
@@ -234,7 +289,7 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
           setScore((prevScore) => {
             const newScore = prevScore + 1;
             // Check win condition
-            if (newScore >= WIN_SCORE) {
+            if (newScore >= gridSizeRef.current * gridSizeRef.current) {
               setGameWon(true);
             }
             return newScore;
@@ -246,8 +301,8 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
           let newFood: { x: number; y: number };
           do {
             newFood = {
-              x: Math.floor(Math.random() * GRID_SIZE),
-              y: Math.floor(Math.random() * GRID_SIZE),
+              x: Math.floor(Math.random() * size),
+              y: Math.floor(Math.random() * size),
             };
           } while (
             newSnake.some(
@@ -283,7 +338,7 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
         <div className="text-green-400 font-mono text-sm font-bold flex items-center gap-1.5">
           <span className="text-lg">🐍</span>
           <span>
-            Score: {score} / {WIN_SCORE}
+            Score: {score} / {winScore}
           </span>
         </div>
         <div className="flex gap-1.5">
@@ -304,23 +359,22 @@ export function SnakeGame({ onClose }: SnakeGameProps) {
         </div>
       </div>
       <div
-        className="relative bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-gray-600 rounded-xl shadow-2xl overflow-hidden flex-shrink-0 mx-auto"
-        style={{ width: "320px", height: "320px" }}
+        className="relative bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-gray-600 rounded-xl shadow-2xl overflow-hidden flex-shrink-0 mx-auto w-full max-w-[min(100%,260px)] sm:max-w-[min(100%,300px)] md:max-w-[320px] aspect-square"
       >
         <div
           data-snake-game
-          className="grid gap-0.5 p-0.5 w-full h-full touch-none select-none"
+          className="grid gap-0.5 p-0.5 w-full h-full min-h-0 touch-none select-none"
           style={{
-            gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
-            gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`,
+            gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+            gridTemplateRows: `repeat(${gridSize}, 1fr)`,
           }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, i) => {
-            const x = i % GRID_SIZE;
-            const y = Math.floor(i / GRID_SIZE);
+          {Array.from({ length: gridSize * gridSize }).map((_, i) => {
+            const x = i % gridSize;
+            const y = Math.floor(i / gridSize);
             const snakeIndex = snake.findIndex((s) => s.x === x && s.y === y);
             const isSnake = snakeIndex !== -1;
             const isFood = food.x === x && food.y === y;

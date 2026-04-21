@@ -5,26 +5,17 @@
 export function DevStackBackdrop() {
   return (
     <div
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      className="dev-stack-backdrop pointer-events-none absolute inset-0 z-[1] overflow-hidden"
       aria-hidden
     >
-      {/* Faint layout grid — structure / front-end craft */}
-      <div
-        className="absolute inset-0 opacity-[0.045] dark:opacity-[0.08]"
-        style={{
-          backgroundImage: `
-            linear-gradient(90deg, rgb(148 163 184) 1px, transparent 1px),
-            linear-gradient(rgb(148 163 184) 1px, transparent 1px)
-          `,
-          backgroundSize: "56px 56px",
-        }}
-      />
+      {/* Layout grid — line weight / colors in `globals.css` ([data-dev-grid]) */}
+      <div data-dev-grid aria-hidden />
 
       {/* Code braces — developer identity */}
-      <span className="absolute left-[6%] top-[22%] hidden font-mono text-[clamp(3rem,12vw,7rem)] font-light leading-none text-slate-500/15 dark:text-slate-400/20 md:block">
+      <span className="dev-stack-brace dev-stack-brace--left absolute left-[6%] top-[22%] hidden font-mono text-[clamp(3rem,12vw,7rem)] font-light leading-none md:block">
         {"{"}
       </span>
-      <span className="absolute right-[6%] top-[22%] hidden font-mono text-[clamp(3rem,12vw,7rem)] font-light leading-none text-slate-500/15 dark:text-slate-400/20 md:block">
+      <span className="dev-stack-brace dev-stack-brace--right absolute right-[6%] top-[22%] hidden font-mono text-[clamp(3rem,12vw,7rem)] font-light leading-none md:block">
         {"}"}
       </span>
 

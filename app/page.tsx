@@ -15,7 +15,8 @@ export default function Home() {
       {/* Static wash + soft radials; DevStackBackdrop adds the single slow 3D motion */}
       <div className="page-ambient" aria-hidden="true" />
       <DevStackBackdrop />
-      <div className="relative z-10">
+      {/* Transparent so .page-ambient + [data-dev-grid] stay visible in light (opaque bg was hiding the grid) */}
+      <div className="relative z-10 min-h-screen bg-transparent">
         <Header />
         <Hero />
         <About />

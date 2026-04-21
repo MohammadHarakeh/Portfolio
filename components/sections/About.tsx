@@ -90,7 +90,10 @@ export function About() {
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start">
-                    <span className="text-primary-600 dark:text-primary-400 mr-2 mt-1.5">
+                    <span
+                      className="mr-2 mt-1.5 shrink-0 text-[rgb(30,41,59)] dark:text-primary-400"
+                      aria-hidden
+                    >
                       •
                     </span>
                     <span>
@@ -99,7 +102,10 @@ export function About() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary-600 dark:text-primary-400 mr-2 mt-1.5">
+                    <span
+                      className="mr-2 mt-1.5 shrink-0 text-[rgb(30,41,59)] dark:text-primary-400"
+                      aria-hidden
+                    >
                       •
                     </span>
                     <span>
@@ -108,7 +114,10 @@ export function About() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-primary-600 dark:text-primary-400 mr-2 mt-1.5">
+                    <span
+                      className="mr-2 mt-1.5 shrink-0 text-[rgb(30,41,59)] dark:text-primary-400"
+                      aria-hidden
+                    >
                       •
                     </span>
                     <span>

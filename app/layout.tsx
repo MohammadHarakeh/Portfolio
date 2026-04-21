@@ -31,7 +31,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} ${inter.variable}`}>
+      <body
+        className={`${inter.className} ${inter.variable} bg-[var(--canvas-light)] text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100`}
+      >
         <InitialLoading />
         <ThemeProvider>{children}</ThemeProvider>
         <SpeedInsights />

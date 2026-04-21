@@ -1,27 +1,41 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface MinesweeperGameProps {
   onClose: () => void
 }
 
+function pickMineGridSize(width: number) {
+  if (width < 420) return 8
+  return 10
+}
+
+function mineCountForSize(size: number) {
+  return Math.max(6, Math.round(size * size * 0.14))
+}
+
 export function MinesweeperGame({ onClose }: MinesweeperGameProps) {
+  const [gridSize, setGridSize] = useState(() =>
+    typeof window !== 'undefined' ? pickMineGridSize(window.innerWidth) : 10,
+  )
   const [grid, setGrid] = useState<number[][]>([])
   const [revealed, setRevealed] = useState<boolean[][]>([])
   const [flagged, setFlagged] = useState<boolean[][]>([])
   const [gameOver, setGameOver] = useState(false)
   const [gameWon, setGameWon] = useState(false)
   const [recentlyRevealed, setRecentlyRevealed] = useState<Set<string>>(new Set())
-  const gridSize = 10
-  const mineCount = 15
 
   useEffect(() => {
-    initializeGame()
+    const sync = () => setGridSize(pickMineGridSize(window.innerWidth))
+    sync()
+    window.addEventListener('resize', sync)
+    return () => window.removeEventListener('resize', sync)
   }, [])
 
-  const initializeGame = () => {
+  const initializeGame = useCallback(() => {
+    const mineCount = mineCountForSize(gridSize)
     const newGrid: number[][] = Array(gridSize)
       .fill(0)
       .map(() => Array(gridSize).fill(0))
@@ -72,7 +86,11 @@ export function MinesweeperGame({ onClose }: MinesweeperGameProps) {
     setFlagged(newFlagged)
     setGameOver(false)
     setGameWon(false)
-  }
+  }, [gridSize])
+
+  useEffect(() => {
+    initializeGame()
+  }, [initializeGame])
 
   const revealCell = (x: number, y: number) => {
     if (gameOver || gameWon || revealed[y][x] || flagged[y][x]) return
@@ -131,7 +149,7 @@ export function MinesweeperGame({ onClose }: MinesweeperGameProps) {
         if (newRevealed[i][j]) revealedCount++
       }
     }
-    if (revealedCount === gridSize * gridSize - mineCount) {
+    if (revealedCount === gridSize * gridSize - mineCountForSize(gridSize)) {
       setGameWon(true)
     }
   }
@@ -160,15 +178,15 @@ export function MinesweeperGame({ onClose }: MinesweeperGameProps) {
   }
 
   return (
-    <div className="relative p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center w-full h-full">
-      <div className="mb-4 flex items-center justify-between w-full max-w-md flex-shrink-0">
+    <div className="relative p-2 sm:p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center w-full h-full min-h-0 overflow-y-auto">
+      <div className="mb-2 sm:mb-4 flex items-center justify-between w-full max-w-md flex-shrink-0 gap-2">
         <motion.div 
-          className="text-blue-400 font-mono text-base font-bold flex items-center gap-2"
+          className="text-blue-400 font-mono text-xs sm:text-base font-bold flex items-center gap-1 sm:gap-2 min-w-0"
           animate={gameWon ? { scale: [1, 1.1, 1], color: '#10b981' } : gameOver ? { scale: [1, 1.1, 1], color: '#ef4444' } : {}}
           transition={{ duration: 0.3 }}
         >
-          <span className="text-xl">💣</span>
-          <span>{gameWon ? 'You Won! 🎉' : gameOver ? 'Game Over! 💥' : 'Minesweeper'}</span>
+          <span className="text-lg sm:text-xl shrink-0">💣</span>
+          <span className="truncate">{gameWon ? 'You Won! 🎉' : gameOver ? 'Game Over! 💥' : 'Minesweeper'}</span>
         </motion.div>
         <div className="flex gap-2">
           <button
@@ -185,7 +203,10 @@ export function MinesweeperGame({ onClose }: MinesweeperGameProps) {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-10 gap-1.5 p-2 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border-2 border-gray-700 shadow-2xl">
+      <div
+        className="grid gap-1 p-1.5 sm:gap-1.5 sm:p-2 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border-2 border-gray-700 shadow-2xl w-full max-w-[min(100%,300px)] sm:max-w-[min(100%,360px)] mx-auto"
+        style={{ gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))` }}
+      >
         {Array.from({ length: gridSize * gridSize }).map((_, i) => {
           const x = i % gridSize
           const y = Math.floor(i / gridSize)
@@ -212,7 +233,7 @@ export function MinesweeperGame({ onClose }: MinesweeperGameProps) {
               }}
               whileHover={!isRevealed && !isFlagged ? { scale: 1.1 } : {}}
               whileTap={!isRevealed && !isFlagged ? { scale: 0.95 } : {}}
-              className={`w-8 h-8 text-sm font-bold flex items-center justify-center rounded-md transition-all duration-200 shadow-md ${
+              className={`h-6 w-6 sm:h-8 sm:w-8 text-[10px] sm:text-sm font-bold flex items-center justify-center justify-self-center rounded-md transition-all duration-200 shadow-md ${
                 isRevealed
                   ? isMine
                     ? 'bg-gradient-to-br from-red-600 via-red-500 to-red-700 text-white shadow-red-500/50'

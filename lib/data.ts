@@ -107,7 +107,6 @@ export const skills: Skill[] = [
   { name: "Django", level: "intermediate", category: "framework" },
   { name: "Bootstrap", level: "advanced", category: "framework" },
   { name: "Prisma", level: "advanced", category: "framework" },
-  { name: "Electron.js", level: "intermediate", category: "framework" },
 
   // Databases
   {
